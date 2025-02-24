@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Score Result</title>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md text-center">
+        <h2 class="text-2xl font-bold text-blue-600 mb-4">📊 Score Result</h2>
+        
+        <!-- Display User Details -->
+        <p class="text-gray-700"><strong>👤 Name:</strong> <span id="userName" class="font-semibold"></span></p>
+        <p class="text-gray-700"><strong>📧 Email:</strong> <span id="userEmail" class="font-semibold"></span></p>
+        
+        <!-- Display Scores -->
+        <p class="mt-3 text-lg"><strong>🏆 Total Score:</strong> <span id="totalScore" class="text-blue-600 font-bold">0</span></p>
+        <p class="text-lg"><strong>🎯 Adjusted Score:</strong> <span id="adjustedScore" class="text-green-600 font-bold">0</span></p>
+
+        <!-- Back Button -->
+        <a href="index.html">
+            <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition">
+                🔙 Go Back
+            </button>
+        </a>
+    </div>
+
+    <script>
+        // Retrieve and display stored values
+        document.getElementById("userName").innerText = localStorage.getItem("userName") || "N/A";
+        document.getElementById("userEmail").innerText = localStorage.getItem("userEmail") || "N/A";
+        document.getElementById("totalScore").innerText = localStorage.getItem("totalScore") || "0";
+        document.getElementById("adjustedScore").innerText = localStorage.getItem("adjustedScore") || "0";
+    </script>
+</body>
+</html>
