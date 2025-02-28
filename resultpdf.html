@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redevelopment Bazaar Score (RBS)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            width: 600px;
+            background: white;
+            padding: 20px;
+            margin: auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #003366;
+        }
+
+        .date {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .info p, .score-section p, .improve ol, .score-factors ul {
+            font-size: 14px;
+        }
+
+        .score-section {
+            text-align: center;
+        }
+
+        #score-meter {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        button {
+            background: #003366;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto 0;
+        }
+
+        button:hover {
+            background: #0055a5;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="pdf-content" class="container">
+        <!-- Header -->
+        <header>
+            <h1>REDEVELOPMENT BAZAAR SCORE [RBS]</h1>
+            <p>
+                <a href="https://www.redevelopmentbazaar.com/">https://www.redevelopmentbazaar.com/</a> |
+                <a href="mailto:enquiry@redevelopmentbazaar.com">enquiry@redevelopmentbazaar.com</a>
+            </p>
+            <p class="date" id="current-date"></p>
+        </header>
+        <section class="info">
+            <h2>Current Application Information</h2>
+            <p><strong>Society Name:</strong> <span id="society-name"></span></p>
+            <p><strong>Address:</strong> <span id="address"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+            <p><strong>Remark:</strong> <span id="remark"></span></p>
+        </section>
+
+        <!-- Score Section -->
+        <section class="score-section">
+            <h2>Redevelopment Bazaar Score [RBS]</h2>
+            <p>This is summarized as a Redevelopment Credit Score ranging from 300 - 850.</p>
+            <img id="score-meter" src="" alt="Score Meter">
+        </section>
+
+        <!-- Score Factors -->
+        <section class="score-factors">
+            <h3>Score Factors</h3>
+            <ul>
+                <li>Property Potential</li>
+                <li>Developer Credibility</li>
+                <li>Project Feasibility</li>
+                <li>Financial Health</li>
+                <li>Regulatory Compliance</li>
+            </ul>
+        </section>
+
+        <!-- Improvement Tips -->
+        <section class="improve">
+            <h3>How to Improve RBS?</h3>
+            <ol>
+                <li>Enhance Property Condition: Invest in property maintenance and upgrades.</li>
+                <li>Partner with Reputable Developers: Collaborate with experienced and credible developers.</li>
+                <li>Conduct Thorough Project Analysis: Assess project feasibility, regulatory compliance, and financial health.</li>
+                <li>Maintain Regulatory Compliance: Ensure adherence to local regulations and permits.</li>
+            </ol>
+        </section>
+
+        <!-- Contact -->
+        <section class="contact">
+            <p>For more information or to request an RBS assessment, please contact us at:</p>
+            <p>Email: <a href="mailto:enquiry@redevelopmentbazaar.com">enquiry@redevelopmentbazaar.com</a></p>
+            <p>Phone: +91 9623871444</p>
+        </section>
+
+        <button onclick="downloadPDF()">Download PDF</button>
+    </div>
+
+    <script>
+        document.getElementById("current-date").innerText = new Date().toLocaleDateString();
+        
+        const societyName = localStorage.getItem("societyName") || "Not Provided";
+        const email = localStorage.getItem("email") || "Not Provided";
+        const address = localStorage.getItem("address") || "Not Provided";
+        const remark = localStorage.getItem("remark") || "No remarks available";
+        const score = parseInt(localStorage.getItem("finalScore")) || 600;
+        
+        document.getElementById("society-name").innerText = societyName;
+        document.getElementById("email").innerText = email;
+        document.getElementById("address").innerText = address;
+         document.getElementById("remark").innerText = `Your adjusted score is ${score}`
+        
+        let meterImage = "meter_600.png";
+        if (score < 600) {
+            meterImage = "meter_400.png";
+        } else if (score >= 750) {
+            meterImage = "meter_750.png";
+        }
+        document.getElementById("score-meter").src = meterImage;
+        
+        function downloadPDF() {
+            setTimeout(() => {
+                html2canvas(document.getElementById("pdf-content"), { scale: 2 }).then((canvas) => {
+                    const imgData = canvas.toDataURL("image/png");
+                    const pdf = new jsPDF("p", "mm", "a4");
+                    const imgWidth = 210;
+                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                    
+                    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+                    pdf.save(`RBS_Report_${societyName}.pdf`);
+                });
+            }, 500);
+        }
+    </script>
+</body>
+</html>

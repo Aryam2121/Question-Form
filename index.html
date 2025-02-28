@@ -7,39 +7,55 @@
     <title>Society Form</title>
 </head>
 <body class="bg-gradient-to-r from-blue-50 to-blue-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-2xl w-full max-w-lg border border-gray-200">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">🏡 Society Form</h2>
-        <form id="societyForm" class="space-y-5">
+    <div class="bg-white/90 backdrop-blur-md p-10 rounded-2xl shadow-2xl w-full max-w-2xl border border-gray-200">
+        <h2 class="text-4xl font-bold text-gray-900 mb-8 text-center"></h2>
+        <form id="societyForm" class="space-y-6">
             
             <!-- Input Fields -->
-            <div class="space-y-2">
-                <label class="block font-medium text-gray-800">🏢 Society Name:</label>
-                <input type="text" id="societyName" required class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+            <div class="space-y-3">
+                <label class="block text-lg font-medium text-gray-800">Society Name:</label>
+                <input type="text" id="societyName" required class="w-full p-4 text-lg border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
             </div>
 
-            <div class="space-y-2">
-                <label class="block font-medium text-gray-800">👤 Name of User:</label>
-                <input type="text" id="userName" required class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+            <div class="space-y-3">
+                <label class="block text-lg font-medium text-gray-800">Email:</label>
+                <input type="email" id="email" required class="w-full p-4 text-lg border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
             </div>
 
-            <div class="space-y-2">
-                <label class="block font-medium text-gray-800">📧 Email:</label>
-                <input type="email" id="email" required class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+            <div class="space-y-3">
+                <label class="block text-lg font-medium text-gray-800">Phone No:</label>
+                <input type="tel" id="phone" required class="w-full p-4 text-lg border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
             </div>
 
-            <div class="space-y-2">
-                <label class="block font-medium text-gray-800">📞 Phone No:</label>
-                <input type="tel" id="phone" required class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+            <div class="space-y-3">
+                <label class="block text-lg font-medium text-gray-800">Street:</label>
+                <input type="text" id="street" required class="w-full p-4 text-lg border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
             </div>
 
-            <div class="space-y-2">
-                <label class="block font-medium text-gray-800">📍 Address:</label>
-                <textarea id="address" required class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"></textarea>
+            <div class="space-y-3">
+                <label class="block text-lg font-medium text-gray-800">Landmark:</label>
+                <input type="text" id="landmark" required class="w-full p-4 text-lg border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+            </div>
+
+            <div class="grid grid-cols-2 gap-6">
+                <div class="space-y-3">
+                    <label class="block text-lg font-medium text-gray-800">Pincode:</label>
+                    <input type="text" id="pincode" required class="w-full p-4 text-lg border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                </div>
+                <div class="space-y-3">
+                    <label class="block text-lg font-medium text-gray-800">State:</label>
+                    <input type="text" id="state" required class="w-full p-4 text-lg border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <label class="block text-lg font-medium text-gray-800">Country:</label>
+                <input type="text" id="country" required class="w-full p-4 text-lg border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
             </div>
 
             <!-- Radio Groups -->
             <div class="bg-gray-50 p-4 rounded-lg border space-y-3">
-                <p class="font-semibold">📆 Is the society 30 years old?</p>
+                <p class="font-semibold"> Is the society 30 years old?</p>
                 <div class="flex space-x-4">
                     <label class="flex items-center space-x-2"><input type="radio" name="societyAge" value="40" class="accent-blue-600"> <span>Yes</span></label>
                     <label class="flex items-center space-x-2"><input type="radio" name="societyAge" value="20" class="accent-blue-600"> <span>No</span></label>
@@ -47,7 +63,7 @@
             </div>
 
             <div class="bg-gray-50 p-4 rounded-lg border space-y-3">
-                <p class="font-semibold">📜 Property card available?</p>
+                <p class="font-semibold">Property card available?</p>
                 <div class="flex space-x-4">
                     <label class="flex items-center space-x-2"><input type="radio" name="propertyCard" value="10" class="accent-blue-600"> <span>Yes</span></label>
                     <label class="flex items-center space-x-2"><input type="radio" name="propertyCard" value="5" class="accent-blue-600"> <span>No</span></label>
@@ -55,7 +71,7 @@
             </div>
 
             <div class="bg-gray-50 p-4 rounded-lg border space-y-3">
-                <p class="font-semibold">📑 Existing building approved plan?</p>
+                <p class="font-semibold">Existing building approved plan?</p>
                 <div class="flex space-x-4">
                     <label class="flex items-center space-x-2"><input type="radio" name="buildingPlan" value="10" class="accent-blue-600"> <span>Yes</span></label>
                     <label class="flex items-center space-x-2"><input type="radio" name="buildingPlan" value="5" class="accent-blue-600"> <span>No</span></label>
@@ -63,7 +79,7 @@
             </div>
 
             <div class="bg-gray-50 p-4 rounded-lg border space-y-3">
-                <p class="font-semibold">📄 DP remarks available?</p>
+                <p class="font-semibold">DP remarks available?</p>
                 <div class="flex space-x-4">
                     <label class="flex items-center space-x-2">
                         <input type="radio" name="dpRemarks" value="10" class="accent-blue-600"> 
@@ -77,7 +93,7 @@
             </div>
             
             <div class="bg-gray-50 p-4 rounded-lg border space-y-3">
-                <p class="font-semibold">📑 TP remarks available?</p>
+                <p class="font-semibold">TP remarks available?</p>
                 <div class="flex space-x-4">
                     <label class="flex items-center space-x-2">
                         <input type="radio" name="tpRemarks" value="10" class="accent-blue-600"> 
@@ -92,7 +108,7 @@
             
             
             <div class="bg-gray-50 p-4 rounded-lg border space-y-3">
-                <p class="font-semibold">🚗 Road width abutting plot:</p>
+                <p class="font-semibold">Road width abutting plot:</p>
                 <div class="flex space-x-4">
                     <label class="flex items-center space-x-2"><input type="radio" name="roadWidth" value="10" class="accent-blue-600"> <span>6 metre</span></label>
                     <label class="flex items-center space-x-2"><input type="radio" name="roadWidth" value="10" class="accent-blue-600"> <span>9 metre</span></label>
@@ -101,7 +117,7 @@
             </div>
 
             <div class="bg-gray-50 p-4 rounded-lg border space-y-3">
-                <p class="font-semibold">📝 Consent of Members:</p>
+                <p class="font-semibold">Consent of Members:</p>
                 <div class="flex space-x-4">
                     <label class="flex items-center space-x-2"><input type="radio" name="consentMembers" value="10" class="accent-blue-600"> <span>49%</span></label>
                     <label class="flex items-center space-x-2"><input type="radio" name="consentMembers" value="10" class="accent-blue-600"> <span>60%</span></label>
@@ -112,49 +128,55 @@
         <!-- Submit Button -->
 <button type="button" onclick="submitForm()" 
 class="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold py-3 rounded-lg shadow-md hover:scale-105 transition-all">
-🚀 Submit
+ Submit
 </button>
 
-<h3 class="mt-6 text-xl font-semibold text-center text-gray-800">
+<!-- <h3 class="mt-6 text-xl font-semibold text-center text-gray-800">
 Total Score: <span id="totalScore">0</span>
-</h3>
-
+</h3> -->
 <script>
-function calculateScore() {
-    let score = 0;
-    let radios = document.querySelectorAll("input[type=radio]:checked");
-    radios.forEach(radio => {
-        score += parseInt(radio.value);
+    function calculateScore() {
+        let score = 0;
+        let radios = document.querySelectorAll("input[type=radio]:checked");
+        radios.forEach(radio => {
+            score += parseInt(radio.value);
+        });
+    
+        let adjustedScore = Math.floor((score / 100) * 850 + 0.5);
+    
+        document.getElementById("totalScore").innerText = adjustedScore;
+        localStorage.setItem("totalScore", score);
+        localStorage.setItem("adjustedScore", adjustedScore);
+    }
+    
+    document.querySelectorAll("input[type=radio]").forEach(radio => {
+        radio.addEventListener("change", calculateScore);
     });
-
-    let adjustedScore = (score / 100) * 850;
-
-    // 🟢 Update Score in UI (Live Update)
-    document.getElementById("totalScore").innerText = score;
-
-    // 🟢 Store in Local Storage
-    localStorage.setItem("totalScore", score);
-    localStorage.setItem("adjustedScore", adjustedScore.toFixed(2));
-}
-
-// 🛠 Call calculateScore on radio button change
-document.querySelectorAll("input[type=radio]").forEach(radio => {
-    radio.addEventListener("change", calculateScore);
-});
-
-function submitForm() {
-    // 🟢 Store Name & Email
-    let userName = document.getElementById("userName").value;
-    let userEmail = document.getElementById("email").value;
-    localStorage.setItem("userName", userName);
-    localStorage.setItem("userEmail", userEmail);
-
-    // 🟢 Small Delay to Ensure Data is Stored Before Redirect
-    setTimeout(() => {
-        window.location.href = "result.html";
-    }, 500);
-}
-</script>
+    
+    function submitForm() {
+        let societyName = document.getElementById("societyName").value;
+        let email = document.getElementById("email").value;
+        let phone = document.getElementById("phone").value;
+        let street = document.getElementById("street").value;
+        let landmark = document.getElementById("landmark").value;
+        let pincode = document.getElementById("pincode").value;
+        let state = document.getElementById("state").value;
+        let country = document.getElementById("country").value;
+    
+        let adjustedScore = localStorage.getItem("adjustedScore") || "0";
+    
+        localStorage.setItem("societyName", societyName);
+        localStorage.setItem("email", email);
+        localStorage.setItem("phone", phone);
+        localStorage.setItem("address", `${street}, ${landmark}, ${state}, ${country} - ${pincode}`);
+        localStorage.setItem("finalScore", adjustedScore);
+    
+        setTimeout(() => {
+            window.location.href = "resultpdf.html";
+        }, 500);
+    }
+    </script>
+    
 
 </body>
 </html>
