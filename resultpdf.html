@@ -12,6 +12,9 @@
             background: #f8f9fa;
             padding: 20px;
         }
+        .information{
+            text-align: right;
+        }
 
         .container {
             width: 600px;
@@ -22,7 +25,7 @@
         }
 
         h1, h2, h3 {
-            color: #003366;
+            color: black;
         }
 
         .date {
@@ -39,8 +42,7 @@
         }
 
         #score-meter {
-            width: 100%;
-            max-width: 300px;
+           text-align: left;
         }
 
         button {
@@ -63,15 +65,17 @@
     <div id="pdf-content" class="container">
         <!-- Header -->
         <header>
-            <h1>REDEVELOPMENT BAZAAR SCORE [RBS]</h1>
-            <p>
-                <a href="https://www.redevelopmentbazaar.com/">https://www.redevelopmentbazaar.com/</a> |
-                <a href="mailto:enquiry@redevelopmentbazaar.com">enquiry@redevelopmentbazaar.com</a>
-            </p>
+            <img src="Header.png" alt="Header" style="width: 100%; height: 100%;">
+           
+          
+            <div class="information">
+            
             <p class="date" id="current-date"></p>
+        </div>
         </header>
         <section class="info">
             <h2>Current Application Information</h2>
+            <p><strong>These are the details you give us when you apply for your RBS</strong></p>
             <p><strong>Society Name:</strong> <span id="society-name"></span></p>
             <p><strong>Address:</strong> <span id="address"></span></p>
             <p><strong>Email:</strong> <span id="email"></span></p>
@@ -82,7 +86,7 @@
         <section class="score-section">
             <h2>Redevelopment Bazaar Score [RBS]</h2>
             <p>This is summarized as a Redevelopment Credit Score ranging from 300 - 850.</p>
-            <img id="score-meter" src="" alt="Score Meter">
+            <img src="Score-Meter.png" alt="Score Meter" width="300">
         </section>
 
         <!-- Score Factors -->
@@ -107,14 +111,36 @@
                 <li>Maintain Regulatory Compliance: Ensure adherence to local regulations and permits.</li>
             </ol>
         </section>
+        <section class="improve">
+            <h3>BENEFITS OF RBS</h3>
+            <ol>
+                <li>Informed Decision-Making: Enables property owners, developers, and investors
+                    to make informed decisions.</li>
+                <li>Risk Assessment: Identifies potential risks and opportunities.</li>
+                <li>Comparative Analysis: Facilitates comparison of different properties and
+                    projects.</li>
+                <li>Improved Collaboration: Enhances collaboration among stakeholders.</li>
+            </ol>
+        </section>
+        <section class="improve">
+            <h3>BENEFITS OF RBS TO OTHERS</h3>
+            <ol>
+                <li>Lenders: Assess creditworthiness and project viability.</li>
+                <li>Investors: Evaluate investment potential and risk.</li>
+                <li> Government Agencies: Monitor regulatory compliance and project feasibility.</li>
+                <li>Consultants: Provide expert advice on redevelopment strategies.
+                </li>
+            </ol>
+        </section>
+        
 
         <!-- Contact -->
         <section class="contact">
-            <p>For more information or to request an RBS assessment, please contact us at:</p>
+            <h1>For more information or to request an RBS assessment, please contact us at:</h1>
             <p>Email: <a href="mailto:enquiry@redevelopmentbazaar.com">enquiry@redevelopmentbazaar.com</a></p>
             <p>Phone: +91 9623871444</p>
         </section>
-
+    <img src="Footer.png" alt="Footer" style="width: 100%; height: auto;">
         <button onclick="downloadPDF()">Download PDF</button>
     </div>
 
