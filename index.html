@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
     <title>Society Form</title>
 </head>
 <body class="bg-gradient-to-r from-blue-50 to-blue-100 flex items-center justify-center min-h-screen">
@@ -112,7 +115,7 @@
                 <div class="flex space-x-4">
                     <label class="flex items-center space-x-2"><input type="radio" name="roadWidth" value="10" class="accent-blue-600"> <span>6 metre</span></label>
                     <label class="flex items-center space-x-2"><input type="radio" name="roadWidth" value="10" class="accent-blue-600"> <span>9 metre</span></label>
-                    <label class="flex items-center space-x-2"><input type="radio" name="roadWidth" value="10" class="accent-blue-600"> <span>Above</span></label>
+                    <label class="flex items-center space-x-2"><input type="radio" name="roadWidth" value="5" class="accent-blue-600"> <span>Above</span></label>
                 </div>
             </div>
 
@@ -121,7 +124,7 @@
                 <div class="flex space-x-4">
                     <label class="flex items-center space-x-2"><input type="radio" name="consentMembers" value="10" class="accent-blue-600"> <span>49%</span></label>
                     <label class="flex items-center space-x-2"><input type="radio" name="consentMembers" value="10" class="accent-blue-600"> <span>60%</span></label>
-                    <label class="flex items-center space-x-2"><input type="radio" name="consentMembers" value="10" class="accent-blue-600"> <span>Above 75%</span></label>
+                    <label class="flex items-center space-x-2"><input type="radio" name="consentMembers" value="5" class="accent-blue-600"> <span>Above 75%</span></label>
                 </div>
             </div>
 
@@ -131,50 +134,58 @@ class="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold py
  Submit
 </button>
 
-<!-- <h3 class="mt-6 text-xl font-semibold text-center text-gray-800">
-Total Score: <span id="totalScore">0</span>
-</h3> -->
+<h3 class="mt-6 text-xl font-semibold text-center text-gray-800">
+ <span id="totalScore"></span>
+</h3>
 <script>
-    function calculateScore() {
-        let score = 0;
-        let radios = document.querySelectorAll("input[type=radio]:checked");
-        radios.forEach(radio => {
-            score += parseInt(radio.value);
-        });
+   function calculateScore() {
+    let score = 0;
+    let radios = document.querySelectorAll("input[type=radio]:checked");
     
-        let adjustedScore = Math.floor((score / 100) * 850 + 0.5);
-    
-        document.getElementById("totalScore").innerText = adjustedScore;
-        localStorage.setItem("totalScore", score);
-        localStorage.setItem("adjustedScore", adjustedScore);
-    }
-    
-    document.querySelectorAll("input[type=radio]").forEach(radio => {
-        radio.addEventListener("change", calculateScore);
+    radios.forEach(radio => {
+        score += parseInt(radio.value);
     });
-    
-    function submitForm() {
-        let societyName = document.getElementById("societyName").value;
-        let email = document.getElementById("email").value;
-        let phone = document.getElementById("phone").value;
-        let street = document.getElementById("street").value;
-        let landmark = document.getElementById("landmark").value;
-        let pincode = document.getElementById("pincode").value;
-        let state = document.getElementById("state").value;
-        let country = document.getElementById("country").value;
-    
-        let adjustedScore = localStorage.getItem("adjustedScore") || "0";
-    
-        localStorage.setItem("societyName", societyName);
-        localStorage.setItem("email", email);
-        localStorage.setItem("phone", phone);
-        localStorage.setItem("address", `${street}, ${landmark}, ${state}, ${country} - ${pincode}`);
-        localStorage.setItem("finalScore", adjustedScore);
-    
-        setTimeout(() => {
-            window.location.href = "resultpdf.html";
-        }, 500);
-    }
+
+    let adjustedScore = Math.round((score / 100) * 850);
+
+    // Ensure adjustedScore is at least 0
+    adjustedScore = isNaN(adjustedScore) ? 0 : adjustedScore;
+
+    // Store in localStorage (but don't update UI)
+    localStorage.setItem("totalScore", score);
+    localStorage.setItem("adjustedScore", adjustedScore);
+}
+
+// Ensure all radio buttons trigger score update
+document.querySelectorAll("input[type=radio]").forEach(radio => {
+    radio.addEventListener("change", calculateScore);
+});
+
+function submitForm() {
+    calculateScore(); // Ensure latest score is updated before submit
+
+    let societyName = document.getElementById("societyName").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+    let street = document.getElementById("street").value;
+    let landmark = document.getElementById("landmark").value;
+    let pincode = document.getElementById("pincode").value;
+    let state = document.getElementById("state").value;
+    let country = document.getElementById("country").value;
+
+    let adjustedScore = localStorage.getItem("adjustedScore") || "0";
+
+    localStorage.setItem("societyName", societyName);
+    localStorage.setItem("email", email);
+    localStorage.setItem("phone", phone);
+    localStorage.setItem("address", `${street}, ${landmark}, ${state}, ${country} - ${pincode}`);
+    localStorage.setItem("finalScore", adjustedScore);
+
+    setTimeout(() => {
+        window.location.href = "resultpdf.html";
+    }, 500);
+}
+
     </script>
     
 

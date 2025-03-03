@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redevelopment Bazaar Score (RBS)</title>
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,7 +21,7 @@
         .container {
             width: 600px;
             background: white;
-            padding: 20px;
+           padding: auto;
             margin: auto;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
@@ -100,7 +102,9 @@
                 <li>Regulatory Compliance</li>
             </ul>
         </section>
-
+        <section>
+            <img src="Middle.png" alt="" width="100%">
+        </section>
         <!-- Improvement Tips -->
         <section class="improve">
             <h3>How to Improve RBS?</h3>
@@ -135,11 +139,7 @@
         
 
         <!-- Contact -->
-        <section class="contact">
-            <h1>For more information or to request an RBS assessment, please contact us at:</h1>
-            <p>Email: <a href="mailto:enquiry@redevelopmentbazaar.com">enquiry@redevelopmentbazaar.com</a></p>
-            <p>Phone: +91 9623871444</p>
-        </section>
+      
     <img src="Footer.png" alt="Footer" style="width: 100%; height: auto;">
         <button onclick="downloadPDF()">Download PDF</button>
     </div>
@@ -164,21 +164,38 @@
         } else if (score >= 750) {
             meterImage = "meter_750.png";
         }
-        document.getElementById("score-meter").src = meterImage;
+        // document.getElementById("score-meter").src = meterImage;
         
         function downloadPDF() {
-            setTimeout(() => {
-                html2canvas(document.getElementById("pdf-content"), { scale: 2 }).then((canvas) => {
-                    const imgData = canvas.toDataURL("image/png");
-                    const pdf = new jsPDF("p", "mm", "a4");
-                    const imgWidth = 210;
-                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                    
-                    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-                    pdf.save(`RBS_Report_${societyName}.pdf`);
-                });
-            }, 500);
+    const { jsPDF } = window.jspdf; // ✅ Fix: jsPDF ko correctly import karo
+    const element = document.getElementById("pdf-content");
+
+    html2canvas(element, { scale: 2 }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
+
+        const imgWidth = 210;
+        const pageHeight = 297;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        let heightLeft = imgHeight;
+        let position = 0;
+
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft > 0) {
+            position -= pageHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
         }
+
+        pdf.save(`RBS_Report_${societyName}.pdf`);
+    });
+}
+
+
     </script>
 </body>
 </html>
