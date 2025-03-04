@@ -158,18 +158,54 @@ class="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold py
 
     let adjustedScore = Math.round((score / 100) * 850);
 
-    // Ensure adjustedScore is at least 0
+   
     adjustedScore = isNaN(adjustedScore) ? 0 : adjustedScore;
 
-    // Store in localStorage (but don't update UI)
+   
     localStorage.setItem("totalScore", score);
     localStorage.setItem("adjustedScore", adjustedScore);
 }
 
-// Ensure all radio buttons trigger score update
+
 document.querySelectorAll("input[type=radio]").forEach(radio => {
     radio.addEventListener("change", calculateScore);
 });
+async function generateAndUploadPDF() {
+    let pdf = new jsPDF();
+    
+    // Convert HTML content to Canvas
+    let canvas = await html2canvas(document.body);
+    let imgData = canvas.toDataURL("image/png");
+    
+    pdf.addImage(imgData, "PNG", 10, 10, 180, 160);
+    
+    // Convert to Blob
+    let pdfBlob = pdf.output("blob");
+    let formData = new FormData();
+    formData.append("file", pdfBlob, "result.pdf");
+    formData.append("user_id", "1");
+
+    try {
+        let response = await fetch("https://demowebiste.xyz/redevelopment/api.php", {
+            method: "POST",
+            body: formData
+        });
+        let result = await response.json();
+        
+        if (result.status === "success") {
+            alert("PDF Uploaded: " + result.file_url);
+        } else {
+            alert("Upload failed!");
+        }
+    } catch (error) {
+        console.error("Upload Error:", error);
+    }
+}
+
+// Call function after redirecting to result page
+setTimeout(generateAndUploadPDF, 1000);
+
+
 function submitForm() {
     calculateScore(); // Ensure latest score is updated before submit
 

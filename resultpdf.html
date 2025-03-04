@@ -40,13 +40,16 @@
             font-size: 14px;
             padding: 2px 0;
             padding-left: 50px;
+            
         }
 
        
 
-        #score-meter {
-           text-align: left;
-        }
+        #score-meter, .box {
+    display: inline-block;
+    vertical-align: middle;
+}
+
 
         button {
             background: #003366;
@@ -97,9 +100,21 @@
     display: block; /* Inline element ko block banane ke liye */
     margin: 0;      /* Center se hata ke left pe laane ke liye */
     text-align: left; /* Agar kahi inheritance aa rahi hai toh */
+    /* ✅ Row me align karega */
 }
 li{
     padding: 5px 0;
+}
+.box {
+    border: 2px solid #333; /* ✅ Inner Border */
+    padding: 10px 15px;
+    display: flex;
+  
+   text-align: right;
+    align-items: flex-end;
+    border-radius: 8px;
+    background-color: white;
+    width: fit-content; 
 }
 
     </style>
@@ -130,8 +145,12 @@ li{
         <section class="score-section">
             <h2>Redevelopment Bazaar Score [RBS]</h2>
             <p>This is summarized as a Redevelopment Credit <br> Score ranging from 300 - 850.</p>
-            <img src="Score-Meter.png" alt="Score Meter" width="300" style="display: block; margin: 0;">
+            <img id="score-meter" src="Score-Meter.png" alt="score meter" width="225" style="display: block;padding-left: 30px; ">
 
+            <span class="box">
+                <h1>RBS SCORE</h1>
+                <h2 id="score-value">600/850</h2> 
+            </span>
         </section>
 
         <!-- Score Factors -->
@@ -201,11 +220,20 @@ li{
     </div>
 </div>
 
-
+<h2>Generated PDF</h2>
+    <button onclick="generateAndUploadPDF()">Download & Upload PDF</button>
+    <a id="pdfLink" href="#" style="display:none;" download="result.pdf">Download PDF</a>
     <script>
         function printPage() {
     window.print(); // ✅ Page ko print karega
 }
+// ✅ Score Value Update
+function updateScoreDisplay() {
+    const score = parseInt(localStorage.getItem("finalScore")) || 600;
+    document.getElementById("score-value").innerText = `${score}/850`;
+}
+
+document.addEventListener("DOMContentLoaded", updateScoreDisplay);
 
 function shareReport() {
     if (navigator.share) {
@@ -236,13 +264,35 @@ function openDocument() {
         document.getElementById("address").innerText = address;
          document.getElementById("remark").innerText = `Your adjusted score is ${score}`
         
-        let meterImage = "meter_600.png";
-        if (score < 600) {
-            meterImage = "meter_400.png";
-        } else if (score >= 750) {
-            meterImage = "meter_750.png";
-        }
-        // document.getElementById("score-meter").src = meterImage;
+        // ✅ Score Meter Image Update Function
+function updateScoreMeter() {
+    const score = parseInt(localStorage.getItem("finalScore")) || 600; // Default 600
+    let meterImage = "Good.jpg"; // Default Image
+
+    if (score >= 300 && score <= 579) {
+        meterImage = "Poor.jpg";
+    } else if (score >= 580 && score <= 669) {
+        meterImage = "fair.jpg";
+    } else if (score >= 670 && score <= 739) {
+        meterImage = "Good.jpg";
+    } else if (score >= 740 && score <= 799) {
+        meterImage = "very Good.jpg";
+    } else if (score >= 800) {
+        meterImage = "excellent.jpg";
+    }
+
+    // ✅ Set Image Dynamically
+    let scoreMeterImg = document.getElementById("score-meter");
+    if (scoreMeterImg) {
+        scoreMeterImg.src = meterImage;
+    } else {
+        console.warn("⚠️ score-meter element not found!");
+    }
+}
+
+// ✅ Call Function on Page Load
+document.addEventListener("DOMContentLoaded", updateScoreMeter);
+
         
         function downloadPDF() {
     const { jsPDF } = window.jspdf; // ✅ Fix: jsPDF ko correctly import karo
@@ -272,6 +322,70 @@ function openDocument() {
         pdf.save(`RBS_Report_${societyName}.pdf`);
     });
 }
+async function generateAndUploadPDF() {
+    const { jsPDF } = window.jspdf;
+    let pdf = new jsPDF("p", "mm", "a4"); // A4 Size PDF
+    
+    // **1️⃣ High-Quality Screenshot (html2canvas)**
+    let canvas = await html2canvas(document.body, {
+        scale: 2,        // Higher resolution
+        useCORS: true    // External images support
+    });
+    
+    let imgData = canvas.toDataURL("image/png");
+
+    let imgWidth = 210; // A4 width in mm
+    let pageHeight = 297; // A4 height in mm
+    let imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    if (imgHeight > pageHeight) {
+        pdf.addImage(imgData, "PNG", 10, 10, imgWidth - 20, pageHeight - 20);
+    } else {
+        pdf.addImage(imgData, "PNG", 10, 10, imgWidth - 20, imgHeight);
+    }
+
+    let pdfBlob = pdf.output("blob");
+
+    // **2️⃣ Download PDF Button Show Karna**
+    let pdfURL = URL.createObjectURL(pdfBlob);
+    let pdfLink = document.getElementById("pdfLink");
+    if (pdfLink) {
+        pdfLink.href = pdfURL;
+        pdfLink.style.display = "block";
+    } else {
+        console.warn("pdfLink element not found!");
+    }
+
+    // **3️⃣ PDF Upload API Call**
+    let formData = new FormData();
+    let pdfFile = new File([pdfBlob], "result.pdf", { type: "application/pdf" });
+    formData.append("file", pdfFile);
+    formData.append("user_id", "1");
+
+    try {
+        let response = await fetch("https://demowebiste.xyz/redevelopment/api.php", {
+            method: "POST",
+            body: formData
+        });
+
+        let result = await response.json();
+
+        if (result.status === "success") {
+            alert("✅ PDF Uploaded Successfully!");
+            window.location.href = result.file_url; // PDF Open Karne Ke Liye
+        } else {
+            alert("❌ Upload failed! Error: " + result.message);
+        }
+    } catch (error) {
+        console.error("Upload Error:", error);
+    }
+}
+
+// **Auto-Generate & Upload PDF on Load**
+document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(generateAndUploadPDF, 1000);
+});
+
 
 
     </script>
