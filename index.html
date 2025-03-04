@@ -113,27 +113,37 @@
             <div class="bg-gray-50 p-4 rounded-lg border space-y-3">
                 <p class="font-semibold">Road width abutting plot:</p>
                 <div class="flex space-x-4">
-                    <label class="flex items-center space-x-2"><input type="radio" name="roadWidth" value="10" class="accent-blue-600"> <span>6 metre</span></label>
-                    <label class="flex items-center space-x-2"><input type="radio" name="roadWidth" value="10" class="accent-blue-600"> <span>9 metre</span></label>
-                    <label class="flex items-center space-x-2"><input type="radio" name="roadWidth" value="5" class="accent-blue-600"> <span>Above</span></label>
+                    <label class="flex items-center space-x-2"><input type="radio" name="roadWidth" value="5" class="accent-blue-600"> <span>6 metre</span></label>
+                    <label class="flex items-center space-x-2"><input type="radio" name="roadWidth" value="5" class="accent-blue-600"> <span>9 metre</span></label>
+                    <label class="flex items-center space-x-2"><input type="radio" name="roadWidth" value="10" class="accent-blue-600"> <span>Above</span></label>
                 </div>
             </div>
 
             <div class="bg-gray-50 p-4 rounded-lg border space-y-3">
                 <p class="font-semibold">Consent of Members:</p>
                 <div class="flex space-x-4">
-                    <label class="flex items-center space-x-2"><input type="radio" name="consentMembers" value="10" class="accent-blue-600"> <span>49%</span></label>
-                    <label class="flex items-center space-x-2"><input type="radio" name="consentMembers" value="10" class="accent-blue-600"> <span>60%</span></label>
-                    <label class="flex items-center space-x-2"><input type="radio" name="consentMembers" value="5" class="accent-blue-600"> <span>Above 75%</span></label>
+                    <label class="flex items-center space-x-2"><input type="radio" name="consentMembers" value="5" class="accent-blue-600"> <span>49%</span></label>
+                    <label class="flex items-center space-x-2"><input type="radio" name="consentMembers" value="5" class="accent-blue-600"> <span>60%</span></label>
+                    <label class="flex items-center space-x-2"><input type="radio" name="consentMembers" value="10" class="accent-blue-600"> <span>Above 75%</span></label>
                 </div>
             </div>
 
-        <!-- Submit Button -->
+       
+            <!-- Submit Button -->
+            <!-- <button type="button" onclick="submitForm()" 
+                class="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold py-3 rounded-lg shadow-md hover:scale-105 transition-all">
+                Submit
+            </button>
+
+            <h3 class="mt-6 text-xl font-semibold text-center text-gray-800">
+                Generated PDF: <a id="pdfLink" href="#" class="text-blue-600 underline"></a>
+            </h3>
+        </form> -->
+             <!-- Submit Button -->
 <button type="button" onclick="submitForm()" 
 class="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold py-3 rounded-lg shadow-md hover:scale-105 transition-all">
  Submit
 </button>
-
 <h3 class="mt-6 text-xl font-semibold text-center text-gray-800">
  <span id="totalScore"></span>
 </h3>
@@ -160,7 +170,6 @@ class="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold py
 document.querySelectorAll("input[type=radio]").forEach(radio => {
     radio.addEventListener("change", calculateScore);
 });
-
 function submitForm() {
     calculateScore(); // Ensure latest score is updated before submit
 
@@ -185,6 +194,60 @@ function submitForm() {
         window.location.href = "resultpdf.html";
     }, 500);
 }
+
+//  async function submitForm() {
+//     const { jsPDF } = window.jspdf;
+//     const doc = new jsPDF();
+//     calculateScore(); // Ensure latest score is updated before submit
+
+//     let societyName = document.getElementById("societyName").value;
+//     let email = document.getElementById("email").value;
+//     let phone = document.getElementById("phone").value;
+//     let street = document.getElementById("street").value;
+//     let landmark = document.getElementById("landmark").value;
+//     let pincode = document.getElementById("pincode").value;
+//     let state = document.getElementById("state").value;
+//     let country = document.getElementById("country").value;
+
+//     let adjustedScore = localStorage.getItem("adjustedScore") || "0";
+
+//     localStorage.setItem("societyName", societyName);
+//     localStorage.setItem("email", email);
+//     localStorage.setItem("phone", phone);
+//     localStorage.setItem("address", `${street}, ${landmark}, ${state}, ${country} - ${pincode}`);
+//     localStorage.setItem("finalScore", adjustedScore);
+//     let address = `${street}, ${landmark}, ${state}, ${country} - ${pincode}`;
+// localStorage.setItem("address", address);
+
+// doc.text(`Address: ${address}`, 10, 50);
+
+//     doc.text(`Society Name: ${societyName}`, 10, 20);
+//     doc.text(`Email: ${email}`, 10, 30);
+//     doc.text(`Phone: ${phone}`, 10, 40);
+//     doc.text(`Address: ${address}`, 10, 50);
+//     doc.text(`Final Score: ${adjustedScore}`, 10, 60);
+
+//     const pdfBlob = doc.output("blob");
+//     const formData = new FormData();
+//     formData.append("pdf", pdfBlob, "report.pdf");
+
+//     try {
+//         const response = await fetch("http://localhost:5000/upload-pdf", {
+//             method: "POST",
+//             body: formData,
+//         });
+
+//         const data = await response.json();
+//         if (data.success) {
+//             document.getElementById("pdfLink").href = data.pdfUrl;
+//             document.getElementById("pdfLink").textContent = "Download PDF";
+//         } else {
+//             alert("Error uploading PDF");
+//         }
+//     } catch (error) {
+//         console.error("Upload failed:", error);
+//     }
+// }
 
     </script>
     

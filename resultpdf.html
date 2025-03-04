@@ -21,13 +21,14 @@
         .container {
             width: 600px;
             background: white;
-           padding: auto;
+         
             margin: auto;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
         h1, h2, h3 {
             color: black;
+            padding-left: 50px;
         }
 
         .date {
@@ -37,11 +38,11 @@
 
         .info p, .score-section p, .improve ol, .score-factors ul {
             font-size: 14px;
+            padding: 2px 0;
+            padding-left: 50px;
         }
 
-        .score-section {
-            text-align: center;
-        }
+       
 
         #score-meter {
            text-align: left;
@@ -60,6 +61,47 @@
         button:hover {
             background: #0055a5;
         }
+        .fab-container {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.fab-icon {
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.fab-icon:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.1);
+}
+
+.fab-icon img {
+    width: 24px;
+    height: 24px;
+}
+.score-section img {
+    display: block; /* Inline element ko block banane ke liye */
+    margin: 0;      /* Center se hata ke left pe laane ke liye */
+    text-align: left; /* Agar kahi inheritance aa rahi hai toh */
+}
+li{
+    padding: 5px 0;
+}
+
     </style>
 </head>
 <body>
@@ -87,8 +129,9 @@
         <!-- Score Section -->
         <section class="score-section">
             <h2>Redevelopment Bazaar Score [RBS]</h2>
-            <p>This is summarized as a Redevelopment Credit Score ranging from 300 - 850.</p>
-            <img src="Score-Meter.png" alt="Score Meter" width="300">
+            <p>This is summarized as a Redevelopment Credit <br> Score ranging from 300 - 850.</p>
+            <img src="Score-Meter.png" alt="Score Meter" width="300" style="display: block; margin: 0;">
+
         </section>
 
         <!-- Score Factors -->
@@ -139,12 +182,47 @@
         
 
         <!-- Contact -->
-      
-    <img src="Footer.png" alt="Footer" style="width: 100%; height: auto;">
-        <button onclick="downloadPDF()">Download PDF</button>
+      <img src="Footer.png" alt="Footer" style="width: 100%; height: 100%;">
+    
     </div>
+<!-- Floating Action Buttons -->
+<div class="fab-container">
+    <div class="fab-icon" onclick="downloadPDF()">
+        <img src="download-icon.png" alt="Download">
+    </div>
+    <div class="fab-icon" onclick="openDocument()">
+        <img src="credential.png" alt="Document">
+    </div>
+    <div class="fab-icon" onclick="printPage()">
+        <img src="printer-icon.png" alt="Print">
+    </div>
+    <div class="fab-icon" onclick="shareReport()">
+        <img src="share.png" alt="Share">
+    </div>
+</div>
+
 
     <script>
+        function printPage() {
+    window.print(); // ✅ Page ko print karega
+}
+
+function shareReport() {
+    if (navigator.share) {
+        navigator.share({
+            title: "Redevelopment Bazaar Score (RBS)",
+            text: "Check out this RBS report!",
+            url: window.location.href,
+        }).catch((error) => console.log("Error sharing:", error));
+    } else {
+        alert("Sharing not supported on this browser.");
+    }
+}
+
+function openDocument() {
+    alert("Opening document functionality is not implemented yet.");
+}
+
         document.getElementById("current-date").innerText = new Date().toLocaleDateString();
         
         const societyName = localStorage.getItem("societyName") || "Not Provided";
